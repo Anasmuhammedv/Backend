@@ -1,35 +1,34 @@
-import { boolean } from 'joi'
 import mongoose from 'mongoose'
 
 const productSchema = new mongoose.Schema(
 {
     title:{
-        type:string,
+        type:String,
         require:true
     },
     description : {
-        type:string,
+        type:String,
         require:true
     },
     price :{
         type:Number,
         require:true
     },
-    image:{
-        type:string,
+    productImage:{
+        type:String,
         require:true
     },
     category:{
-        type:string,
+        type:String,
         require:true
     },
     isDeletes:{
-        type:boolean,
+        type:Boolean,
         default:false
     }
 
 }
 )
 
-const Product =mongoose.model('Product',productSchema)
-export default productSchema
+const Product =mongoose.model('Product', productSchema)
+export default Product;

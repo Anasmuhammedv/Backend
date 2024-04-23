@@ -16,12 +16,7 @@ export const userJoi = Joi.object({
 //joi validation for product
 export const productJoi = Joi.object({
     title: Joi.string().min(3).max(30).required(),
-
     description:Joi.string().min(3).max(50).required(),
-
-    price:Joi.number().min(3).max(30).required(),
-
-    image:Joi.string().min(3).max(50).required(),
-
+    price:Joi.number().positive().required(),
     category:Joi.string().min(3).max(50).required(),
 })
