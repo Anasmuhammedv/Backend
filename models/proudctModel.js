@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema(
         type:String,
         require:true
     },
-    isDeletes:{
+    isDelete:{
         type:Boolean,
         default:false
     }

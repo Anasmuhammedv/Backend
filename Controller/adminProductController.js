@@ -1,4 +1,4 @@
-import product from '../models/proudctModel.js'
+import Product from '../models/proudctModel.js'
 import { productJoi } from '../middleWares/joiValidation.js'
 
 
@@ -8,7 +8,7 @@ export const createProduct = async (req,res)=>{
         const validatedProduct = await productJoi.validateAsync(req.body);
 
         //add new product
-        const newProduct =new product({
+        const newProduct =new Product({
             title:validatedProduct.title,
             description:validatedProduct.description,
             price:validatedProduct.price,

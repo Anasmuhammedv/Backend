@@ -3,7 +3,9 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 import authRouter from "./Routes/authRoutes.js";
-import adminRoute from './Routes/adminRoute.js'
+import adminRoute from './Routes/adminRoute.js';
+import productRoute from './Routes/productRoute.js';
+
 
 const app = express();
 
@@ -14,6 +16,7 @@ app.use(express.json())
 
 //usersRoute
 app.use('/api/users', authRouter),
+app.use('/api/users', productRoute)
 
 
 //adminRoute
