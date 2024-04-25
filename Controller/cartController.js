@@ -1,55 +1,101 @@
-import User from '../models/userModel'
-import Product from '../models/proudctModel'
-import Cart from '../models/cartModel';
+import User from '../models/userModel.js';
+import Product from "../models/proudctModel.js"
+import Cart from '../models/cartModel.js';
 
-export const addToCart = async(req,res)=>{
+export const addToCart = async (req, res) => {
     try {
+        const { userId } = req.params;
+        const { productId } = req.params;
 
-        const userId =req.params.userId;
-        const productId = req.params.productId;
+        // Find user
+        const user = await User.findById(userId);
 
-        //find user
-        const user =User.findById(userId)
-
-        if(!user){
-            res.status(404).json({message:"user not found"})
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
 
-        //findProduct
-        const product = Product.findById(productId)
+        // Find product - Corrected: added await
+        const product = await Product.findById(productId);
 
-        if(!product){
-            res.status(404).json({message:"product Not found"})
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
         }
 
-        //create cart
+        // Find or create cart item
+        let cartItem = await Cart.findOne({ userId: user._id, productId: product._id });
 
-        let cartItem = Cart.findOne({userId:user._id , productId:uroduct._id})
-        
-
-        //if the product already exist quantity increment
-        if(cartItem){
-           cartItem.quantity++;
-           await cartItem.save()
-        }else{
-
-            //if the product doesnot exist create new cart
+        // If the product already exists in the cart, increment quantity
+        if (cartItem) {
+            cartItem.quantity++;
+            await cartItem.save();
+        } else {
+            // If the product does not exist, create a new cart item
             cartItem = await Cart.create({
-                userId:user._id,
-                productId:product._id,
-                quantity:1
-
+                userId: user._id,
+                productId: product._id,
+                quantity: 1
             });
         }
 
-        //add product to user cart
+        // Add product to user's cart
         user.cart.push(cartItem._id);
         await user.save();
 
-        return res.status(200).json({message:"product added to cart"})
-
+        return res.status(200).json({ message: "Product added to cart successfully" });
     } catch (error) {
-        
-        res.status(400).json({message:"cannot add product"})
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error" });
     }
-}
+};
+
+// import User from '../models/userModel.js';
+// import Product from '../models/proudctModel.js'
+// import Cart from '../models/cartModel.js';
+
+// export const addToCart = async (req, res) => {
+//     try {
+//         const { userId } = req.params;
+//         const { productId } = req.params;
+
+//         // Find user
+//         const user = await User.findById(userId);
+
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
+
+//         // Find product
+//         const product = await Product.findById(productId);
+
+//         if (!product) {
+//             return res.status(404).json({ message: "Product not found" });
+//         }
+
+//         // Find or create cart item
+//         let cartItem = await Cart.findOne({ userId: user._id, productId: product._id });
+
+//         // If the product already exists in the cart, increment quantity
+//         if (cartItem) {
+//             cartItem.quantity++;
+//             await cartItem.save();
+//         } else {
+//             // If the product does not exist, create a new cart item
+//             cartItem = await Cart.create({
+//                 userId: user._id,
+//                 productId: product._id,
+//                 quantity: 1
+//             });
+//         }
+
+//         // Add product to user's cart
+//         user.cart.push(cartItem._id);
+//         await user.save();
+
+//         return res.status(200).json({ message: "Product added to cart successfully" });
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ message: "Internal server error" });
+//     }
+// };
+
+
