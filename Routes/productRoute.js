@@ -1,7 +1,7 @@
 import express from 'express'
 import { allProducts, productByCategory, productById } from '../Controller/productController.js'
 import { userToken } from '../middleWares/userMiddleware.js'
-import { addToCart, decrementCartQuantity, incrementCartQuantity, viewCart } from '../Controller/cartController.js'
+import { addToCart, decrementCartQuantity, incrementCartQuantity, removeCart, viewCart } from '../Controller/cartController.js'
 
 
 const router = express.Router()
@@ -19,6 +19,7 @@ router.post('/:userId/cart/:productId', userToken, addToCart)
 router.get('/cart/:id', userToken, viewCart)
 router.post('/:userId/cart/:productId/increment', userToken,incrementCartQuantity )
 router.post('/:userId/cart/:productId/decrement', userToken,decrementCartQuantity )
+router.post('/:userId/cart/:productId/remove', userToken,removeCart )
 
 export default router
 

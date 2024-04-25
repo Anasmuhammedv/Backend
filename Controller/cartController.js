@@ -205,7 +205,7 @@ export const decrementCartQuantity = async(req,res)=>{
         let cartItem = await Cart.findOne({userId : user._id  ,   productId : product._id})
         if(cartItem){
 
-            
+
             //if product already  exist decrement
 
             if(typeof quantityDecrement !== "number"){
@@ -218,7 +218,7 @@ export const decrementCartQuantity = async(req,res)=>{
                 await cartItem.save();
             } else {
                 // If decrement will make quantity negative, set quantity to 0
-                cartItem.quantity = 0;
+                cartItem.quantity = 1
                 await cartItem.save();
             }
         }
@@ -232,6 +232,44 @@ export const decrementCartQuantity = async(req,res)=>{
     }
 }
 
+
+
+
+//remove item from the cart
+
+export const removeCart = async (req,res)=>{
+    try {
+        const { userId} =req.params
+        const { productId}=req.params
+
+        //find user 
+        const user = await User.findById(userId)
+        if(!user){
+            return res.status(404).json({message:"user not found"})
+
+        }
+        
+        //find product
+        const product = await Product.findById(productId)
+        if(!product){
+            return res.status(404).json({message:"product not found"})
+        }
+
+        let cartItem = await Cart.findOneAndDelete({userId:user._id , productId:product._id})
+
+        if(!cartItem){
+            return res.status(404).json({message:"product not found in the user cart"})
+
+        }
+
+        return res.status(200).json({message:"product deleted successfully"})
+
+    } catch (error) {
+
+        res.status(500).json({message:"internal server error"})
+        
+    }
+}
 
 
 
