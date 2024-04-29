@@ -2,7 +2,6 @@ import User from '../models/userModel.js';
 import  {userJoi} from '../middleWares/joiValidation.js'
 import  JsonWebToken from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
-import errorhandler from '../middleWares/errorhandler.js'
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -31,7 +30,7 @@ export const signup = async (req, res) => {
             email: validatedData.email,
             username: validatedData.username,
             password: hashedPassword,
-            profileImg: req.cloudinaryImageUrl // Assuming this is set by the cloudinaryUploadImg middleware
+            profileImg: req.cloudinaryImageUrl 
         });
 
         // Save the new user to the database

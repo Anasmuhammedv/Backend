@@ -17,7 +17,7 @@ export const addToCart = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Find product - Corrected: added await
+        // Find product
         const product = await Product.findById(productId);
 
         if (!product) {

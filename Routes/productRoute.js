@@ -8,7 +8,7 @@ const router = express.Router()
 
 
 router.get('/allProducts',userToken, allProducts)
-router.get('/productsBy/:id',userToken , productById)
+router.get('/products/:id',userToken , productById)
 router.get("/products/category/:categoryName" , userToken , productByCategory)
 
 

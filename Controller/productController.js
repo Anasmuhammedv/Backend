@@ -8,7 +8,7 @@ export const allProducts = async (req,res) => {
     try {
         const allProducts =await Product.find()
         if(!allProducts){
-            res.staus(404).json({message:"no products"})
+           return res.staus(404).json({message:"no products"})
         }
         res.status(200).json(allProducts)
     } catch (error) {
@@ -30,9 +30,9 @@ export const productById = async (req,res)=>{
     const oneProduct = await Product.findOne({_id:product_id})
 
     if(!oneProduct){
-        res.status(404).json({message:"no product found"})
+       return res.status(404).json({message:"no product found"})
     }else {
-        res.status(200).json({oneProduct})
+       return res.status(200).json({oneProduct})
     }
         
     } catch (error) {
