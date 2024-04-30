@@ -29,7 +29,7 @@ const upload = multer({
           
             next()
         } catch (error) {
-            return next(error);
+            return next(error); 
             
         }
     });
