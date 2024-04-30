@@ -7,6 +7,9 @@ import { addToCart, decrementCartQuantity, incrementCartQuantity, removeCart, vi
 const router = express.Router()
 
 
+
+//product Routes
+
 router.get('/allProducts',userToken, allProducts)
 router.get('/products/:id',userToken , productById)
 router.get("/products/category/:categoryName" , userToken , productByCategory)

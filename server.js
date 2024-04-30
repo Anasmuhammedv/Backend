@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // middle wares
-app.use(express.json())
+app.use(express.json())   
 
 //usersRoute
 app.use('/api/users', authRouter),

@@ -52,43 +52,6 @@ export const signup = async (req, res) => {
 
 
 
-// export const signup = async (req, res) => {
-//     try {
-//         // Validate request body using Joi
-//         const validatedData = await userJoi.validateAsync(req.body);
-
-//         // Check if user already exists with the provided email
-//         const existingUser = await User.findOne({ email: validatedData.email });
-//         if (existingUser) {
-//             return res.status(400).json({ message: "User already exists" });
-//         }
-
-//         // Hash the password
-//         const hashedPassword = bcrypt.hashSync(validatedData.password, 15);
-
-//         // Create a new user object
-//         const newUser = new User({
-//             email: validatedData.email,
-//             username: validatedData.username,
-//             password: hashedPassword,
-//             profileImg: req.cloudinaryImageUrl // Assuming this is set by the cloudinaryUploadImg middleware
-//         });
-
-//         // Save the new user to the database
-//         await newUser.save();
-
-//         // Respond with success message
-//         res.status(201).json({ message: "New user created" });
-//     } catch (error) {
-//         // Handle errors
-//         if (error.isJoi) {
-//             return res.status(400).json({ message: "Invalid data", details: error.details });
-//         }
-
-//         console.error("Error during user registration:", error);
-//         res.status(500).json({ message: "Internal server error" });
-//     }
-// };
 
 
 
