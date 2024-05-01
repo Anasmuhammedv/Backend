@@ -57,6 +57,31 @@ export const createProduct = async (req,res)=>{
 
 
 //admin can view product by category
+
+
+export const AdminViewProductByCategory = async (req,res)=>{
+    try {
+
+        const { categoryName}= req.params
+
+        const productCategory = await Product.find({
+            $or :[
+                {category : {$regex : new RegExp(categoryName , 'i')}},
+                {title:{$regex : new RegExp(categoryName,'i')}}
+            ]
+        }).select('title category price')
+
+        if(productCategory.length===0 || !productCategory){
+           return res.status(404).json({message:"product not found"})
+        }
+        res.status(200).json({productCategory})
+        
+    } catch (error) {
+
+        res.status(404).json({message:"internal server error"})
+        
+    }
+ }
    
 
      
