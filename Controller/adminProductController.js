@@ -35,6 +35,27 @@ export const createProduct = async (req,res)=>{
 }
 
 
+//admin can view all products in database
+
+
+    export const adminAllProduct = async (req,res)=>{
+        try {
+
+            const allproduct = await Product.find()
+
+            if(!allproduct){
+              return res.status(404).json({message:"no products found"})
+            }
+            res.status(200).json({allproduct})
+            
+        } catch (error) {
+
+            res.status(404).json({message:"internal server error"})
+            
+        }
+    }
+
+
 //Admin can see the product by id
 
      export const adminViewProductById = async (req,res)=>{
@@ -78,6 +99,30 @@ export const AdminViewProductByCategory = async (req,res)=>{
         
     } catch (error) {
 
+        res.status(404).json({message:"internal server error"})
+        
+    }
+ }
+
+
+
+ //Admin can delete the product in database
+
+
+ export const adminDeleteProduct = async(req,res)=>{
+    try {
+        const {id}= req.params
+        const deleteProduct = await Product.findByIdAndDelete(id)
+
+        if(!deleteProduct){
+           return res.status(404).json({message:"no product found for deletion"})
+        }
+        
+
+        res.status(200).json({deleteProduct})
+        
+
+    } catch (error) {
         res.status(404).json({message:"internal server error"})
         
     }
