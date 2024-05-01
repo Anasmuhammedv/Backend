@@ -2,12 +2,15 @@ import Product from '../models/proudctModel.js'
 import { productJoi } from '../middleWares/joiValidation.js'
 
 
+
+
+
 export const createProduct = async (req,res)=>{
     try {
          
         const validatedProduct = await productJoi.validateAsync(req.body);
 
-        //add new product
+ //admin can add new product
         const newProduct =new Product({
             title:validatedProduct.title,
             description:validatedProduct.description,
@@ -30,3 +33,30 @@ export const createProduct = async (req,res)=>{
         
     }
 }
+
+
+//Admin can see the product by id
+
+     export const adminViewProductById = async (req,res)=>{
+        try {
+
+            const {id}=req.params
+
+            const productById = await Product.findById(id)
+            
+            if(!productById){
+               return res.status(404).json({message:"product not found in this id"})
+            }
+            res.status(200).json({productById})
+            
+        } catch (error) {
+            res.status(404).json({message:"internal server error"})
+            
+        }
+     }
+
+
+//admin can view product by category
+   
+
+     
