@@ -105,6 +105,41 @@ export const AdminViewProductByCategory = async (req,res)=>{
  }
 
 
+ //admin edit product
+    
+     export const adminUpdateProduct = async(req,res)=>{
+        try {
+            
+            const {id} = req.params
+
+            const editProduct =await Product.findById(id)
+
+            if(!editProduct){
+                res.status(404).json({message:"no product found "})
+            }
+
+            const {title,description,price,category} =req.body
+
+            if(title)         editProduct.title = title
+            if(description)   editProduct.description = description
+            if(category)      editProduct.category = category
+            if(price)         editProduct.price = price
+            if(req.cloudinaryImageUrl) editProduct.productImage = req.cloudinaryImageUrl
+
+
+            //save updated product
+
+            await editProduct.save()
+
+            res.status(200).json({message:"product updated successfully" , editProduct:editProduct})
+
+        } catch (error) {
+            res.status(404).json({message:"internal server error"})
+            
+        }
+     }
+
+
 
  //Admin can delete the product in database
 
