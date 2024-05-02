@@ -31,6 +31,9 @@ export const addToCart = async (req, res) => {
         if (cartItem) {
             cartItem.quantity++;
             await cartItem.save();
+            return res.status(201).json({ message: "Product incremented" });
+
+            
         } else {
             // If the product does not exist, create a new cart item
             cartItem = await Cart.create({
@@ -38,13 +41,13 @@ export const addToCart = async (req, res) => {
                 productId: product._id,
                 quantity: 1
             });
+            
+                    // Add product to user's cart
+                    user.cart.push(cartItem._id);
+                    await user.save();
+            
+                    return res.status(200).json({ message: "Product added to cart successfully" });
         }
-
-        // Add product to user's cart
-        user.cart.push(cartItem._id);
-        await user.save();
-
-        return res.status(200).json({ message: "Product added to cart successfully" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Internal server error" });
