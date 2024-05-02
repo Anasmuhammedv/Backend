@@ -44,3 +44,51 @@ export const adminViewUserById =async (req,res)=>{
         
     }
 }
+
+
+//list user by username
+
+    export const adminViewUserByUserName =async (req,res)=>{
+        try {
+
+            const {userName} = req.params
+
+            const user = await User.find({username:{$regex:new RegExp (userName , 'i')}}).select('username')
+            
+
+            if(!user || user.length ==0){
+              return res.status(404).json({message:"user not found"})
+            }
+
+
+            res.status(200).json({user})
+            
+        } catch (error) {
+            res.status(404).json({message:"internal server error"})
+            
+        }
+    }
+
+
+
+//admin can delete user in database
+
+
+      export const adminDeleteUser = async(req,res)=>{
+        try {
+
+            const {userId} =req.params
+
+            const deleteUser = await User.findByIdAndDelete(userId)
+
+            if(!deleteUser){
+                return res.status(404).json({message:"no user found"})
+            }
+            res.status(200).json(deleteUser)
+            
+        } catch (error) {
+
+            res.status(404).json({message:"internal server error"})
+            
+        }
+      }

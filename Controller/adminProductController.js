@@ -141,27 +141,7 @@ export const AdminViewProductByCategory = async (req,res)=>{
 
 
 
- //Admin can delete the product in database
-
-
- export const adminDeleteProduct = async(req,res)=>{
-    try {
-        const {id}= req.params
-        const deleteProduct = await Product.findByIdAndDelete(id)
-
-        if(!deleteProduct){
-           return res.status(404).json({message:"no product found for deletion"})
-        }
-        
-
-        res.status(200).json({deleteProduct})
-        
-
-    } catch (error) {
-        res.status(404).json({message:"internal server error"})
-        
-    }
- }
+ 
    
 
      
