@@ -4,6 +4,7 @@ import {  AdminViewProductByCategory, adminAllProduct, adminDeleteProduct, admin
 import { adminLogin} from "../Controller/adminLoginController.js"
 import { adminToken } from "../middleWares/adminMidddleware.js"
 import { adminDeleteUser, adminViewUserById, adminViewUserByUserName, allUser } from "../Controller/adminUserController.js"
+import { adminOrderDetails } from "../Controller/adminOrders.js"
 
 const router = express.Router()
 
@@ -18,5 +19,8 @@ router.get('/category/:categoryName' , AdminViewProductByCategory)
 router.delete('/delete/:id' , adminDeleteProduct)
 router.get('/allProduct' , adminAllProduct)
 router.patch('/editProduct/:id' , adminUpdateProduct)
+
+
+router.get('/order' , adminOrderDetails)
 
 export default router
