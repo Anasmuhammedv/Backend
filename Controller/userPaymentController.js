@@ -1,6 +1,8 @@
 import Stripe from "stripe";
 import User from "../models/userModel.js";
 import dotenv from 'dotenv'
+import Orders from "../models/orderModel.js";
+import Cart from "../models/cartModel.js";
 dotenv.config()
 
 const stripeInstance = Stripe(process.env.STRIPE_API_KEY)
@@ -19,7 +21,7 @@ export const payment = async (req, res, next) => {
             populate: { path: 'productId' }
         });
 
-        console.log(user);
+        
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -68,7 +70,7 @@ export const payment = async (req, res, next) => {
         }
 
          paymentData = {
-            id, // Assuming id refers to the user's MongoDB _id
+            id, 
             user,
             session
         };
@@ -84,3 +86,58 @@ export const payment = async (req, res, next) => {
         
     }
 }
+
+
+//PAYMENT SUCCESS
+    
+
+
+    export const success = async (req, res) => {
+        try {
+            const { id, user, session } = paymentData;
+    
+            // console.log("id is", id);
+            // console.log("session is", session);
+            // console.log("user is", user);
+    
+            const userId = user._id;
+            const cartItem = user.cart;
+
+
+            const productItems = cartItem.map((item) => item.productId);
+    
+            const order = await Orders.create({
+                userId: id,
+                productId: productItems, 
+                orderId: session.id,
+                paymentId: `demo ${Date.now()}`,
+                totalPrice: session.amount_total / 100,
+                totalItems: productItems.length 
+            });
+    
+            if (!order) {
+                return res.status(500).json({ message: "Error occurred while creating order" });
+            }
+    
+            const orderId = order._id;
+    
+            // Update user document
+            const userUpdate = await User.findOneAndUpdate(
+                { _id: userId },
+                { $push: { order: orderId },
+                 $set: { cart: [] } },
+                { new: true }
+            );
+    
+            if (!userUpdate) {
+                return res.status(404).json({ message: "Error occurred while updating user" });
+            }
+
+            await Cart.deleteMany({ _id: { $in: cartItem.map(item => item._id) } });
+    
+            res.status(200).json({ message: "Payment successful" });
+        } catch (error) {
+            res.status(500).json({ message: "Internal server error", error: error.message });
+        }
+    };
+    

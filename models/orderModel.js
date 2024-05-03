@@ -7,11 +7,11 @@ const orderSchema = new mongoose.Schema({
         ref :"User",
         required:true
     },
-    productId :{
+    productId :[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Products",
         required:true
-    },
+    }],
     purchaseDate :{
         type:Date,
         required:true,
