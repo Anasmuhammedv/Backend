@@ -2,7 +2,7 @@ import express from 'express'
 import { allProducts, productByCategory, productById } from '../Controller/productController.js'
 import { userToken } from '../middleWares/userMiddleware.js'
 import { addToCart, decrementCartQuantity, incrementCartQuantity, removeCart, viewCart } from '../Controller/cartController.js'
-// import { payment } from '../Controller/userPaymentController.js'
+import { payment } from '../Controller/userPaymentController.js'
 
 
 const router = express.Router()
@@ -26,7 +26,7 @@ router.post('/:userId/cart/:productId/decrement', userToken,decrementCartQuantit
 router.post('/:userId/cart/:productId/remove', userToken,removeCart )
 
 
-// router.post('/payment/:Id' , payment)
+router.post('/payment/:Id' , payment)
 
 
 export default router
