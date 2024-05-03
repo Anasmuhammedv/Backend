@@ -112,7 +112,7 @@ export const payment = async (req, res, next) => {
                 orderId: session.id,
                 paymentId: `demo ${Date.now()}`,
                 totalPrice: session.amount_total / 100,
-                totalItems: productItems.length 
+                totalItems: productItems.quantity
             });
     
             if (!order) {
@@ -140,4 +140,39 @@ export const payment = async (req, res, next) => {
             res.status(500).json({ message: "Internal server error", error: error.message });
         }
     };
+
+
+
+
+//USER CAN SEE THEIR ORDERS
+
+     export const orderDetails = async(req,res)=>{
+        try {
+
+            const userId = req.params.id
+            const user = await User.findById( userId).populate({
+                path:'order',
+                populate:{path:'productId'}
+            })
+
+            if(!user){
+                return res.status(404).json({message:"user not found"})
+            }
+
+         
+
+            // if (!user.order || user.order.length === 0) {
+            //     return res.status(200).json({ message: "User order is empty", data: [] });
+            // }
+
+            res.status(200).json(user.order)
+
+            
+        } catch (error) {
+
+            console.error(error)
+            
+            res.status(404).json({message:"internal serverr error" ,error})
+        }
+     }
     

@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
     },
     productId :[{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Products",
+        ref:"Product",
         required:true
     }],
     purchaseDate :{
@@ -34,6 +34,11 @@ const orderSchema = new mongoose.Schema({
     totalItems :{
         type:Number,
         required:true
+    },
+
+    paymentId: {
+        type: String,
+        required: true
     }
 
 
