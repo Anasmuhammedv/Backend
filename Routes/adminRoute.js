@@ -18,9 +18,10 @@ router.get('/product/:id', adminViewProductById)
 router.get('/category/:categoryName' , AdminViewProductByCategory)
 router.delete('/delete/:id' , adminDeleteProduct)
 router.get('/allProduct' , adminAllProduct)
-router.patch('/editProduct/:id' , adminUpdateProduct)
+router.patch('/editProduct/:id',cloudinaryUploadImg , adminUpdateProduct)
 
 
 router.get('/order' , adminOrderDetails)
+
 
 export default router

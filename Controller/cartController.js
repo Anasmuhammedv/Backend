@@ -265,6 +265,15 @@ export const removeCart = async (req,res)=>{
 
         }
 
+        //find the index of the cartitem in the user cart item array
+        const cartItemIndex =user.cart.findIndex(item=> item.equals(cartItem._id))
+        
+
+        //if the cart item is found remove from the user cart
+        if(cartItemIndex !==-1){
+            user.cart.splice(cartItemIndex,1)
+            await user.save()
+        }
         return res.status(200).json({message:"product deleted successfully"})
 
     } catch (error) {
