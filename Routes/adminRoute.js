@@ -4,7 +4,7 @@ import {  AdminViewProductByCategory, adminAllProduct, adminDeleteProduct, admin
 import { adminLogin} from "../Controller/adminLoginController.js"
 import { adminToken } from "../middleWares/adminMidddleware.js"
 import { adminDeleteUser, adminViewUserById, adminViewUserByUserName, allUser } from "../Controller/adminUserController.js"
-import { adminOrderDetails } from "../Controller/adminOrders.js"
+import { adminOrderDetails, status } from "../Controller/adminOrders.js"
 
 const router = express.Router()
 
@@ -22,6 +22,7 @@ router.patch('/editProduct/:id',cloudinaryUploadImg , adminUpdateProduct)
 
 
 router.get('/order' , adminOrderDetails)
+router.get('/revenue' , status)
 
 
 export default router
