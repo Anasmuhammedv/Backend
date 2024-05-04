@@ -8,21 +8,44 @@ import { adminOrderDetails, status } from "../Controller/adminOrders.js"
 
 const router = express.Router()
 
-router.post('/add',cloudinaryUploadImg, createProduct)
+//admin login setup
 router.get('/login' , adminLogin)
+
+//Admin view all user who registerd 
 router.get('/allUser' ,adminToken,allUser)
-router.get('/user/:id' , adminViewUserById)
-router.get('/userName/:userName' ,adminViewUserByUserName)
-router.delete('/delete/:userId' , adminDeleteUser)
-router.get('/product/:id', adminViewProductById)
-router.get('/category/:categoryName' , AdminViewProductByCategory)
-router.delete('/delete/:id' , adminDeleteProduct)
-router.get('/allProduct' , adminAllProduct)
-router.patch('/editProduct/:id',cloudinaryUploadImg , adminUpdateProduct)
 
+//admin view user by their id 
+router.get('/user/:id' ,adminToken, adminViewUserById)
 
-router.get('/order' , adminOrderDetails)
-router.get('/revenue' , status)
+//admin view user by username
+router.get('/userName/:userName',adminToken ,adminViewUserByUserName)
+
+//admin delete user by id
+router.delete('/delete/user/:userId' , adminDeleteUser)
+
+//admin can add new product
+router.post('/add',cloudinaryUploadImg,adminToken, createProduct)
+
+//admin view all product
+router.get('/allProduct',adminToken , adminAllProduct)
+
+//admin can view product by id
+router.get('/product/:id',adminToken, adminViewProductById)
+
+//Admin view product by category or title
+router.get('/category/:categoryName',adminToken , AdminViewProductByCategory)
+
+//admin delete product by id
+router.delete('/delete/product/:id' ,adminToken, adminDeleteProduct)
+
+//admin update the product
+router.patch('/editProduct/:id',cloudinaryUploadImg,adminToken , adminUpdateProduct)
+
+//admin view all order
+router.get('/order' ,adminToken, adminOrderDetails)
+
+//admin view revenue generated
+router.get('/revenue',adminToken , status)
 
 
 export default router

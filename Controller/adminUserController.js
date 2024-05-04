@@ -53,7 +53,7 @@ export const adminViewUserById =async (req,res)=>{
 
             const {userName} = req.params
 
-            const user = await User.find({username:{$regex:new RegExp (userName , 'i')}}).select('username')
+            const user = await User.find({username:{$regex:new RegExp (userName , 'i')}})
             
 
             if(!user || user.length ==0){
