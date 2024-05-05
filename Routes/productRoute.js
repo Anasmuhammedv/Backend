@@ -9,20 +9,29 @@ const router = express.Router()
 
 
 
-//product Routes
+//PRODUCT ROUTES
 
+
+//user can see all products
 router.get('/allProducts',userToken, allProducts)
+//user can see products by id
 router.get('/products/:id',userToken , productById)
+//usr can see products by category
 router.get("/products/category/:categoryName" , userToken , productByCategory)
 
 
 
-//cart Routes
+//CART ROUTES
 
+//user can add product to cart
 router.post('/:userId/cart/:productId', userToken, addToCart)
+//user can view product in their cart
 router.get('/cart/:id', userToken, viewCart)
+//user can increment cart product
 router.post('/:userId/cart/:productId/increment', userToken,incrementCartQuantity )
+//user can decrement product in their cart
 router.post('/:userId/cart/:productId/decrement', userToken,decrementCartQuantity )
+//user can remove product in their cart
 router.post('/:userId/cart/:productId/remove', userToken,removeCart )
 
 

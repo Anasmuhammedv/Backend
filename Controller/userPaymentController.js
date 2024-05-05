@@ -112,7 +112,7 @@ export const payment = async (req, res, next) => {
                 orderId: session.id,
                 paymentId: `demo ${Date.now()}`,
                 totalPrice: session.amount_total / 100,
-                totalItems: productItems.quantity
+                // totalItems: productItems.quantity
             });
     
             if (!order) {
@@ -161,9 +161,9 @@ export const payment = async (req, res, next) => {
 
          
 
-            // if (!user.order || user.order.length === 0) {
-            //     return res.status(200).json({ message: "User order is empty", data: [] });
-            // }
+            if (!user.order || user.order.length === 0) {
+                return res.status(200).json({ message: "User order is empty", data: [] });
+            }
 
             res.status(200).json(user.order)
 

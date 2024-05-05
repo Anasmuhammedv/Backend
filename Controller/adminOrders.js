@@ -27,7 +27,7 @@ import Orders from "../models/orderModel.js";
 // total revenue generated
 
 
-export const status = async (req, res, next) => {
+export const status = async (req, res) => {
     try {
       const totalStats = await Orders.aggregate([
         {

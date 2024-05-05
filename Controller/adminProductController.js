@@ -50,7 +50,7 @@ export const createProduct = async (req,res)=>{
             
         } catch (error) {
 
-            res.status(404).json({message:"internal server error"})
+            res.status(404).json({message:"internal server error",error})
             
         }
     }
