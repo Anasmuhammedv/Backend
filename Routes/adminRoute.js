@@ -27,7 +27,7 @@ router.delete('/delete/user/:userId' , adminDeleteUser)
 router.post('/block/:userId', adminBlockUser)
 
 //admin unblock user by id
-// router.post('/unblock/:userId' , adminUnBlockUser)
+router.post('/unblock/:userId' , adminBlockUser)
 
 //admin can add new product
 router.post('/add',cloudinaryUploadImg,adminToken, createProduct)
