@@ -6,9 +6,12 @@ export const userJoi = Joi.object({
 
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{8,30}$")),
 
-  email: Joi.string().email({
+  email: Joi.string()
+  .pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)
+  .email({
     minDomainSegments: 2,
     tlds: { allow: ["com", "net"] },
+    
   })
 });
 

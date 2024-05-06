@@ -13,7 +13,7 @@ let paymentData = {}
 
 
 
-export const payment = async (req, res, next) => {
+export const payment = async (req, res) => {
     try {
         const id = req.params.Id;
         const user = await User.findById(id).populate({
@@ -61,8 +61,8 @@ export const payment = async (req, res, next) => {
             payment_method_types: ["card"],
             line_items: lineItems,
             mode: "payment",
-            success_url: "https://example.com/success", // Replace with actual success URL
-            cancel_url: "https://example.com/cancel"    // Replace with actual cancel URL
+            success_url: "https://example.com/success", 
+            cancel_url: "https://example.com/cancel"    
         });
 
         if (!session) {

@@ -3,7 +3,7 @@ import { cloudinaryUploadImg } from "../middleWares/uploadImage.js"
 import {  AdminViewProductByCategory, adminAllProduct, adminDeleteProduct, adminUpdateProduct, adminViewProductById, createProduct } from "../Controller/adminProductController.js"
 import { adminLogin} from "../Controller/adminLoginController.js"
 import { adminToken } from "../middleWares/adminMidddleware.js"
-import { adminDeleteUser, adminViewUserById, adminViewUserByUserName, allUser } from "../Controller/adminUserController.js"
+import { adminBlockUser, adminDeleteUser, adminViewUserById, adminViewUserByUserName, allUser } from "../Controller/adminUserController.js"
 import { adminOrderDetails, status } from "../Controller/adminOrders.js"
 
 const router = express.Router()
@@ -22,6 +22,12 @@ router.get('/userName/:userName',adminToken ,adminViewUserByUserName)
 
 //admin delete user by id
 router.delete('/delete/user/:userId' , adminDeleteUser)
+
+//admin block user by id
+router.post('/block/:userId', adminBlockUser)
+
+//admin unblock user by id
+// router.post('/unblock/:userId' , adminUnBlockUser)
 
 //admin can add new product
 router.post('/add',cloudinaryUploadImg,adminToken, createProduct)

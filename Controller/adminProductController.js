@@ -1,5 +1,6 @@
 import Product from '../models/proudctModel.js'
 import { productJoi } from '../middleWares/joiValidation.js'
+import Cart from '../models/cartModel.js';
 
 
 
@@ -99,7 +100,7 @@ export const AdminViewProductByCategory = async (req,res)=>{
         
     } catch (error) {
 
-        res.status(404).json({message:"internal server error"})
+        res.status(404).json({message:"internal server error",error})
         
     }
  }
@@ -115,7 +116,7 @@ export const AdminViewProductByCategory = async (req,res)=>{
             const editProduct =await Product.findById(id)
 
             if(!editProduct){
-                res.status(404).json({message:"no product found "})
+               return res.status(404).json({message:"no product found "})
             }
 
             const {title,description,price,category} =req.body
@@ -153,6 +154,7 @@ export const adminDeleteProduct = async(req,res)=>{
         if(!deleteProduct){
            return res.status(404).json({message:"no product found for deletion"})
         }
+
         
 
         res.status(200).json({deleteProduct})

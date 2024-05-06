@@ -68,6 +68,10 @@ export const login = async (req,res)=>{
         const validUser = await User.findOne({email})
         if(!validUser) return res.status(401).json({message : "user not found"})
 
+        if(validUser.isDeleted ===true){
+            return res.status(400).json({message:"user is blocked"})
+        }
+
         //check password that enter by user to check valid or not
         const validPassword = bcrypt.compareSync(password, validUser.password);
         if(!validPassword) return res.status(401).json({message : "invalid password"})

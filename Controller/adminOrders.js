@@ -44,7 +44,7 @@ export const status = async (req, res) => {
       } else {
         res.status(200).json({
           status: "Success",
-          data: { totalProduct: 0, totalRevenue: 0 }
+          data: { totalProduct: 0, totalRevenue: 0 }      
         });
       }}
        catch(error){

@@ -92,3 +92,26 @@ export const adminViewUserById =async (req,res)=>{
             
         }
       }
+
+
+   //admin block user
+        
+         export const adminBlockUser = async(req,res)=>{
+            try {
+                const {userId}=req.params
+                const userBlock = await User.findByIdAndUpdate({_id:userId} , {$set:{isDeleted:true}});
+
+                if(!userBlock){
+                    return res.status(404).json({message:"user not found"})
+                }
+                res.status(404).json({message:"user Blocked successfully"})
+                
+            } catch (error) {
+                res.status(404).json({message:"intrenal server error" , error})
+                
+            }
+         }
+
+
+
+    
